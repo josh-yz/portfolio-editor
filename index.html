@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Joshua Barraza — Video Editor, Flutter Developer & UI/UX Designer based in Santiago, Chile."/>
+  <title>Joshua Barraza — Video Editor · Developer · Designer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    /* Syne as display font fallback for Clash Display */
+    :root { --font-display: 'Syne', sans-serif; }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- ═══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">J<span>.</span>Barraza</a>
+
+  <div class="nav-links">
+    <a href="#about"     id="nav-about">About</a>
+    <a href="#skills"    id="nav-skills">Skills</a>
+    <a href="#portfolio" id="nav-portfolio">Portfolio</a>
+    <a href="#projects"  id="nav-projects">Projects</a>
+    <a href="#contact"   id="nav-contact">Contact</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+    <a href="#contact" class="nav-contact-btn" id="nav-contact-btn">
+      Contact Now <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+
+  <!-- Left -->
+  <div class="hero-left fade-up">
+    <p class="hero-greeting" id="hero-greeting">Hey there. I'm</p>
+    <h1 class="hero-name">
+      Joshua<br>
+      <span class="line2" id="hero-line2">Barraza</span>
+    </h1>
+    <div class="hero-roles">
+      <span class="role-pill active">Video Editor</span>
+      <span class="role-pill">Flutter Developer</span>
+      <span class="role-pill">UI/UX Designer</span>
+    </div>
+    <p class="hero-desc" id="hero-desc">
+      I craft high-impact video content for global media brands, build mobile apps with Flutter, and design intuitive digital experiences. Based in Chile, working worldwide.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary" id="hero-btn-main">
+        Let's Connect <span class="arrow-circle">→</span>
+      </a>
+      <a href="#portfolio" class="btn-secondary" id="hero-btn-sec">View Work</a>
+    </div>
+  </div>
+
+  <!-- Center — Photo Card -->
+  <div class="hero-center fade-up" style="transition-delay:0.15s">
+    <div class="photo-card">
+      <img id="heroPhoto" src="" alt="Joshua Barraza"/>
+      <div class="photo-socials">
+        <a href="https://www.linkedin.com/in/josh-barraza" target="_blank" rel="noopener" class="social-bubble" title="LinkedIn">in</a>
+        <a href="https://www.youtube.com/@screenvview" target="_blank" rel="noopener" class="social-bubble" title="YouTube">▶</a>
+        <a href="https://screenrant.com/author/joshua-barraza/" target="_blank" rel="noopener" class="social-bubble" title="Screen Rant">SR</a>
+        <a href="https://play.google.com/store/apps/developer?id=Sistemas+LH" target="_blank" rel="noopener" class="social-bubble" title="Google Play">GP</a>
+      </div>
+      <div class="photo-status" id="hero-status">
+        <span class="status-dot"></span>Available for new projects
+      </div>
+    </div>
+  </div>
+
+  <!-- Right — Info Panel -->
+  <div class="hero-right fade-up" style="transition-delay:0.3s">
+    <div class="hero-badge">
+      <div class="badge-label" id="badge-label">Creative Professional</div>
+      <div class="badge-title">
+        <span id="badge-main">Video</span><br>
+        <span class="faded" id="badge-faded">Editor</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-box accent-box">
+        <div class="stat-num">95+</div>
+        <div class="stat-label" id="stat1-label">Videos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3+</div>
+        <div class="stat-label" id="stat2-label">Years Exp.</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2</div>
+        <div class="stat-label" id="stat3-label">Apps Live</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2</div>
+        <div class="stat-label" id="stat4-label">Brands</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-label" id="about-section-label">Who I Am</div>
+  <h2 class="section-title fade-up" id="about-title">
+    About <span class="faded">Me</span>
+  </h2>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <p id="about-p1">I'm a <strong>creative professional</strong> based in Santiago, Chile, with a unique blend of skills across video editing, mobile development, and UI/UX design.</p>
+      <p id="about-p2">I've edited <strong>95+ videos</strong> for Screen Rant and WatchMojo — two of the most recognized names in online entertainment. I also founded <strong>Screen View</strong>, a Spanish-language YouTube channel, and developed <strong>Socio LH</strong>, a Flutter app on Google Play.</p>
+      <p id="about-p3">Always looking to work with <strong>ambitious teams</strong> on projects that push creative boundaries.</p>
+    </div>
+    <div class="exp-list fade-up" style="transition-delay:0.2s">
+      <div class="exp-item">
+        <div class="exp-icon">🎬</div>
+        <div class="exp-info">
+          <h4>Screen Rant · Valnet Inc.</h4>
+          <p id="exp1-role">Video Editor (Power Creator) · Nov 2024 – Feb 2025</p>
+          <span class="exp-tag">95+ VIDEOS</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">▶️</div>
+        <div class="exp-info">
+          <h4>WatchMojo</h4>
+          <p id="exp2-role">Freelance Video Editor · ~2022–2023</p>
+          <span class="exp-tag">25M+ SUBSCRIBERS</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">📱</div>
+        <div class="exp-info">
+          <h4>Sistemas LH</h4>
+          <p id="exp3-role">Flutter Developer · App on Google Play</p>
+          <span class="exp-tag">PUBLISHED APP</span>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-icon">📺</div>
+        <div class="exp-info">
+          <h4>Screen View</h4>
+          <p id="exp4-role">Founder & Editor · 2023 – Present</p>
+          <span class="exp-tag">YOUTUBE CHANNEL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SKILLS
+════════════════════════════════════════ -->
+<section id="skills">
+  <div class="section-label" id="skills-section-label">What I Do</div>
+  <h2 class="section-title fade-up" id="skills-title">
+    My <span class="faded">Skills</span>
+  </h2>
+  <div class="skills-grid">
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🎬</div>
+      <h3 id="skill1-name">Video Editing</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Adobe Premiere Pro</span>
+        <span class="skill-tag">DaVinci Resolve</span>
+        <span class="skill-tag">CapCut</span>
+        <span class="skill-tag">Color Grading</span>
+        <span class="skill-tag">Audio Mix</span>
+        <span class="skill-tag">Short-form</span>
+        <span class="skill-tag">Long-form</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up" style="transition-delay:0.1s">
+      <div class="skill-icon">📱</div>
+      <h3 id="skill2-name">Mobile Dev</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Flutter</span>
+        <span class="skill-tag">Dart</span>
+        <span class="skill-tag">Android</span>
+        <span class="skill-tag">iOS</span>
+        <span class="skill-tag">Google Play</span>
+        <span class="skill-tag">Firebase</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up" style="transition-delay:0.2s">
+      <div class="skill-icon">🎨</div>
+      <h3 id="skill3-name">Design</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Canva</span>
+        <span class="skill-tag">UI/UX</span>
+        <span class="skill-tag">Prototyping</span>
+        <span class="skill-tag">Wireframing</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up" style="transition-delay:0.3s">
+      <div class="skill-icon">🤖</div>
+      <h3 id="skill4-name">AI Tools</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Google Veo 3</span>
+        <span class="skill-tag">Runway ML</span>
+        <span class="skill-tag">Pika Labs</span>
+        <span class="skill-tag">HeyGen</span>
+        <span class="skill-tag">AI Workflows</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up" style="transition-delay:0.4s">
+      <div class="skill-icon">📲</div>
+      <h3 id="skill5-name">Platforms</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">YouTube</span>
+        <span class="skill-tag">Instagram</span>
+        <span class="skill-tag">TikTok</span>
+        <span class="skill-tag">Reels</span>
+        <span class="skill-tag">Shorts</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up" style="transition-delay:0.5s">
+      <div class="skill-icon">🌎</div>
+      <h3 id="skill6-name">Languages</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Spanish — Native</span>
+        <span class="skill-tag">English — Professional</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PORTFOLIO
+════════════════════════════════════════ -->
+<section id="portfolio">
+  <div class="section-label" id="portfolio-section-label">My Work</div>
+  <h2 class="section-title fade-up" id="portfolio-title">
+    Video <span class="faded">Work</span>
+  </h2>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="Marvel">Marvel</button>
+    <button class="filter-btn" data-filter="DC">DC</button>
+    <button class="filter-btn" data-filter="TV">TV</button>
+    <button class="filter-btn" data-filter="Movies">Movies</button>
+    <button class="filter-btn" data-filter="Gaming">Gaming</button>
+    <button class="filter-btn" data-filter="Anime">Anime</button>
+    <button class="filter-btn" data-filter="Comics">Comics</button>
+  </div>
+  <div class="videos-grid" id="videosGrid">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading videos...</span>
+    </div>
+  </div>
+  <div class="load-more-wrap" id="loadMoreWrap" style="display:none">
+    <button class="btn-secondary" id="load-more-btn">Load More</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PROJECTS
+════════════════════════════════════════ -->
+<section id="projects">
+  <div class="section-label" id="projects-section-label">Dev & Design</div>
+  <h2 class="section-title fade-up" id="projects-title">
+    My <span class="faded">Projects</span>
+  </h2>
+  <div class="projects-grid" id="projectsGrid">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading projects...</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact">
+  <div class="section-label" id="contact-section-label">Get In Touch</div>
+  <h2 class="section-title fade-up" id="contact-title">
+    Let's <span class="faded">Work</span>
+  </h2>
+  <div class="contact-inner fade-up">
+    <p id="contact-desc">Open to remote opportunities in video editing, mobile development, and UI/UX design. Based in Santiago, Chile — working with teams worldwide.</p>
+    <div class="contact-links">
+      <a href="mailto:josh.yzxt@gmail.com" class="contact-link">
+        <span class="icon">✉</span> josh.yzxt@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/josh-barraza" target="_blank" rel="noopener" class="contact-link">
+        <span class="icon">🔗</span> LinkedIn
+      </a>
+      <a href="https://www.youtube.com/@screenvview" target="_blank" rel="noopener" class="contact-link">
+        <span class="icon">▶</span> YouTube
+      </a>
+      <a href="https://play.google.com/store/apps/developer?id=Sistemas+LH" target="_blank" rel="noopener" class="contact-link">
+        <span class="icon">▲</span> Google Play
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <p id="footer-left">© 2026 Joshua Barraza. All rights reserved.</p>
+  <p id="footer-right">Santiago, Chile · Available Worldwide</p>
+</footer>
+
+<!-- Scripts — photo data first, then app logic -->
+<script src="photo.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
