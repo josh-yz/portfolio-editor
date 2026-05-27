@@ -512,7 +512,54 @@ section { padding: 100px 60px; }
 
 /* ── PORTFOLIO ──────────────────────────────────────── */
 #portfolio { background: var(--white); }
-.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+
+/* Company sections */
+.company-section { margin-bottom: 64px; }
+.company-section:last-child { margin-bottom: 0; }
+
+.company-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid var(--border);
+}
+.company-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--black);
+}
+.company-count {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--gray2);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+
+/* Show more per company */
+.show-more-wrap { text-align: center; margin-top: 20px; }
+.btn-show-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white);
+  color: var(--dark);
+  padding: 11px 24px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  cursor: none;
+  transition: all 0.25s;
+}
+.btn-show-more:hover { border-color: var(--black); color: var(--black); }
+.show-more-count { color: var(--gray2); font-family: var(--font-mono); font-size: 12px; }
+
+/* Legacy filter bar (kept for compatibility) */
 .filter-btn {
   padding: 8px 18px;
   border-radius: 100px;
@@ -715,6 +762,15 @@ footer p { font-size: 12px; color: rgba(255,255,255,0.25); font-family: var(--fo
   transition: opacity 0.65s ease, transform 0.65s ease;
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NO CURSOR ON TOUCH ─────────────────────────────── */
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor, .cursor-follower { display: none; }
+  a, button, .video-card, .project-card, .role-pill,
+  .lang-btn, .filter-btn, .btn-show-more,
+  .nav-contact-btn, .social-bubble { cursor: pointer; }
+}
 
 /* ── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 1100px) {

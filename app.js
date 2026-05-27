@@ -11,6 +11,7 @@ const CONFIG = {
   SHEET_NAME:     'videos',
   PROJECTS_SHEET: 'projects',
   PAGE_SIZE:       9,
+  COMPANY_LIMIT:   4,
 };
 
 /* ── TRANSLATIONS ───────────────────────────────────── */
@@ -218,7 +219,12 @@ let state = {
 };
 
 /* ── CURSOR ─────────────────────────────────────────── */
+function isTouchDevice() {
+  return window.matchMedia('(hover: none), (pointer: coarse)').matches;
+}
+
 function initCursor() {
+  if (isTouchDevice()) return;
   const cursor   = document.getElementById('cursor');
   const follower = document.getElementById('cursorFollower');
   let mx = 0, my = 0, fx = 0, fy = 0;
@@ -358,9 +364,6 @@ function setLang(lang) {
   // Portfolio
   q('#portfolio-section-label').textContent = t.sectionPortLabel;
   q('#portfolio-title').innerHTML = `${t.sectionPortTitle} <span class="faded">${t.sectionPortFaded}</span>`;
-  q('[data-filter="all"]').textContent    = t.filterAll;
-  q('[data-filter="Movies"]').textContent = t.filterMovies;
-  q('#load-more-btn').textContent         = t.loadMore;
 
   // Projects
   q('#projects-section-label').textContent = t.sectionProjLabel;
@@ -456,21 +459,11 @@ function renderProjects(projects) {
   }, 30);
 }
 
-/* ── RENDER VIDEOS ──────────────────────────────────── */
-function renderVideos() {
-  const grid    = document.getElementById('videosGrid');
-  const loadWrap= document.getElementById('loadMoreWrap');
-  const t       = I18N[state.lang];
-  const toShow  = state.filtered.slice(0, state.visible);
-
-  if (!toShow.length) {
-    grid.innerHTML = `<div class="loading-state"><p>No videos found.</p></div>`;
-    loadWrap.style.display = 'none';
-    return;
-  }
-
-  grid.innerHTML = toShow.map((v, i) => `
-    <a href="${escHtml(v.url)}" target="_blank" rel="noopener" class="video-card fade-up" style="transition-delay:${(i % CONFIG.PAGE_SIZE) * 0.05}s">
+/* ── VIDEO CARD HTML ────────────────────────────────── */
+function videoCardHTML(v, i) {
+  return `
+    <a href="${escHtml(v.url)}" target="_blank" rel="noopener"
+       class="video-card fade-up" style="transition-delay:${i * 0.04}s">
       <div class="video-thumb">
         <img src="${escHtml(v.thumbnail)}" alt="${escHtml(v.title)}" loading="lazy"
              onerror="this.parentElement.style.background='var(--bg2)';this.style.display='none'"/>
@@ -480,30 +473,103 @@ function renderVideos() {
       <div class="video-info">
         <div class="video-cat">${escHtml(v.category || 'Video')}</div>
         <div class="video-title">${escHtml(v.title)}</div>
-        <span class="video-company">${escHtml(v.company || 'Screen Rant')}</span>
       </div>
-    </a>
-  `).join('');
+    </a>`;
+}
 
-  loadWrap.style.display = state.filtered.length > state.visible ? 'block' : 'none';
-  q('#load-more-btn').textContent = t.loadMore;
+/* ── RENDER VIDEOS (grouped by company) ─────────────── */
+function renderVideos() {
+  const grid = document.getElementById('videosGrid');
+  if (!state.allVideos.length) {
+    grid.innerHTML = `<div class="loading-state"><p>No videos found.</p></div>`;
+    return;
+  }
 
-  // Observe new cards
+  const lim = CONFIG.COMPANY_LIMIT;
+  const t   = I18N[state.lang];
+
+  // Group by company preserving order
+  const grouped = {};
+  state.allVideos.forEach(v => {
+    const co = v.company || 'Other';
+    if (!grouped[co]) grouped[co] = [];
+    grouped[co].push(v);
+  });
+
+  grid.innerHTML = Object.entries(grouped).map(([company, videos]) => {
+    const visible = videos.slice(0, lim);
+    const hidden  = videos.slice(lim);
+    const hasMore = hidden.length > 0;
+
+    return `
+      <div class="company-section fade-up">
+        <div class="company-header">
+          <h3 class="company-name">${escHtml(company)}</h3>
+          <span class="company-count">${videos.length} video${videos.length !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="videos-grid">
+          ${visible.map((v, i) => videoCardHTML(v, i)).join('')}
+        </div>
+        ${hasMore ? `
+        <div class="hidden-videos" style="display:none">
+          <div class="videos-grid">
+            ${hidden.map((v, i) => videoCardHTML(v, lim + i)).join('')}
+          </div>
+        </div>
+        <div class="show-more-wrap">
+          <button class="btn-show-more" data-company="${escHtml(company)}">
+            ${t.loadMore || 'Load More'} <span class="show-more-count">(+${hidden.length})</span>
+          </button>
+        </div>` : ''}
+      </div>`;
+  }).join('');
+
+  // Show more buttons
+  grid.querySelectorAll('.btn-show-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section  = btn.closest('.company-section');
+      const hiddenEl = section.querySelector('.hidden-videos');
+      hiddenEl.style.display = 'block';
+      btn.closest('.show-more-wrap').style.display = 'none';
+      // Animate new cards
+      hiddenEl.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    });
+  });
+
   setTimeout(() => {
     grid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   }, 30);
 }
 
+/* ── COMPANY FILTERS (dynamic) ──────────────────────── */
+function buildCompanyFilters(videos) {
+  const bar = document.getElementById('filterBar');
+  if (!bar) return;
+
+  // Extract unique companies preserving insertion order
+  const companies = ['all', ...new Set(videos.map(v => v.company).filter(Boolean))];
+
+  bar.innerHTML = companies.map(c => {
+    const label = c === 'all' ? (I18N[state.lang].filterAll || 'All') : c;
+    return `<button class="filter-btn${c === state.filter ? ' active' : ''}"
+              data-company="${escHtml(c)}">${escHtml(label)}</button>`;
+  }).join('');
+
+  bar.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.company));
+  });
+}
+
 /* ── FILTER ─────────────────────────────────────────── */
-function applyFilter(filter) {
-  state.filter  = filter;
-  state.visible = CONFIG.PAGE_SIZE;
-  state.filtered = filter === 'all'
+function applyFilter(company) {
+  state.filter   = company;
+  state.visible  = CONFIG.PAGE_SIZE;
+  state.filtered = company === 'all'
     ? [...state.allVideos]
-    : state.allVideos.filter(v => v.category === filter);
+    : state.allVideos.filter(v => v.company === company);
 
   document.querySelectorAll('.filter-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === filter);
+    b.classList.toggle('active', b.dataset.company === company);
   });
   renderVideos();
 }
@@ -544,18 +610,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   initRolePills();
   observeAll();
 
-  // Filter buttons
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
-  });
-
   // Lang buttons
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => setLang(btn.dataset.lang));
   });
-
-  // Load more
-  q('#load-more-btn').addEventListener('click', loadMore);
 
   // Fetch videos + projects in parallel
   const videosGrid = document.getElementById('videosGrid');
